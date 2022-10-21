@@ -23,6 +23,12 @@ const AboutPage = (): JSX.Element => {
         <hr className={`${styles.hr} ${styles.mobileHidden}`} />
         <Item medium={4}>
           <Typography
+            size="medium"
+          >
+            Some important update from community
+          </Typography>
+
+          <Typography
             variant="heading"
             size="medium"
             as="h2"
