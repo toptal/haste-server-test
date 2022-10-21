@@ -1,0 +1,74 @@
+@import "base.scss";
+
+.layout {
+  background-color: $gray-lighter;
+
+  overflow-x: auto;
+
+  height: 100vh;
+
+  .container {
+    @include flex-container(column, flex-start, stretch);
+
+    background-color: $gray-lighter;
+    max-width: 1440px;
+
+    margin-right: auto;
+    margin-left: auto;
+
+    flex: 1;
+
+    padding: gutter(2);
+
+    @include for-mobile-only {
+      min-height: calc(100vh - #{$header-height});
+    }
+
+    @include for-tablet {
+      padding: gutter(3);
+    }
+
+    @include for-desktop {
+      padding: gutter(3) gutter(4) gutter(3);
+    }
+
+    &.no-padding {
+      padding: 0;
+    }
+  }
+
+  .main {
+    @include for-tablet {
+      order: 2;
+    }
+  }
+
+  .aside {
+    margin-right: gutter(3);
+
+    @include for-tablet {
+      order: 1;
+    }
+  }
+
+  .cta-container {
+    @include for-mobile-only {
+      position: sticky;
+
+      bottom: 0;
+
+      z-index: 9;
+
+      background-color: $gray-lighter;
+
+      margin: gutter(2) -#{gutter(2)} -#{gutter(2)} -#{gutter(2)};
+      padding: gutter(2);
+
+      box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    }
+
+    @include for-tablet {
+      order: 1;
+    }
+  }
+}

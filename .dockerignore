@@ -1,8 +1,10 @@
-Dockerfile
-.git
-npm-debug.log
+.git*
+.bundle
+Dockerfile*
+docker-compose.yml*
+Makefile*
+README.*
 node_modules
-*.swp
-*.swo
-data
-*.DS_Store
+*/**/node_modules
+*/**/dist
+*/**/.next

@@ -1,0 +1,28 @@
+{
+  "name": "@hastebin/google-cloud-data-store",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --ext js,ts",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx  --fix",
+    "lint:ci": "yarn lint --quiet",
+    "types:check": "tsc --noEmit --pretty",
+    "dev": "tsc -w",
+    "build": "tsc",
+    "test:unit": "jest --colors --config config/jest.config.js",
+    "test:unit:coverage": "yarn test:unit --ci --silent --maxWorkers 2 --collectCoverage true"
+  },
+  "dependencies": {
+    "@google-cloud/datastore": "^7.0.0"
+  },
+  "devDependencies": {
+    "@hastebin/data-store-helper": "*",
+    "eslint-config": "*",
+    "jest": "*",
+    "tsconfig": "*",
+    "typescript": "^4.6.2"
+  }
+}

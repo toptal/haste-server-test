@@ -1,0 +1,38 @@
+@import "base.scss";
+
+$mobile-buttons-block-height: 64px;
+$editor-external-padding: 32px;
+
+.content-container {
+  @include flex-container(column, flex-start, stretch);
+
+  @include for-mobile-only {
+    margin-top: gutter();
+  }
+
+  min-height: calc(100vh - #{$mobile-buttons-block-height} - #{$editor-external-padding} - #{$header-height});
+}
+
+.title-container {
+  @include flex-container(row, space-between, flex-start);
+
+  margin: 0 0 gutter(3) 0;
+
+  .header-button {
+    color: $primary-button-color;
+
+    @include for-mobile-only {
+      display: none;
+    }
+  }
+}
+
+.buttons-container {
+  @include flex-container(column, flex-start, stretch);
+
+  padding: gutter(2);
+
+  @include for-tablet {
+    display: none;
+  }
+}

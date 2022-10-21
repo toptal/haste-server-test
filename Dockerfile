@@ -1,68 +1,25 @@
-FROM node:16-stretch
+FROM --platform=linux/amd64 node:16.16-slim as base
 
-RUN mkdir -p /usr/src/app && \
-    chown node:node /usr/src/app
+ARG npm_token
+ARG user node
 
-USER node:node
+RUN apt-get update && apt-get install -y openssl libssl-dev libc6 && \
+    yarn global add turbo@1.3.1 --prefix /usr/local
 
-WORKDIR /usr/src/app
+RUN id $user || useradd --uid=1000 $user -m --home-dir=/app
 
-COPY --chown=node:node . .
+RUN mkdir -p /app/apps/next-app \
+          /app/node_modules \
+          /app/apps/next-app/node_modules \
+          /app/apps/server/node_modules \
+          /app/apps/server && \
+    chown -R $user:$user /app
 
-RUN npm install && \
-    npm install redis@0.8.1 && \
-    npm install pg@4.5.7 && \
-    npm install memcached@2.2.2 && \
-    npm install aws-sdk@2.814.0 && \
-    npm install rethinkdbdash@2.3.31
+USER $user
+WORKDIR /app
 
-ENV STORAGE_TYPE=memcached \
-    STORAGE_HOST=127.0.0.1 \
-    STORAGE_PORT=11211\
-    STORAGE_EXPIRE_SECONDS=2592000\
-    STORAGE_DB=2 \
-    STORAGE_AWS_BUCKET= \
-    STORAGE_AWS_REGION= \
-    STORAGE_USENAME= \
-    STORAGE_PASSWORD= \
-    STORAGE_FILEPATH=
+COPY --chown=$user:$user . /app
 
-ENV LOGGING_LEVEL=verbose \
-    LOGGING_TYPE=Console \
-    LOGGING_COLORIZE=true
+RUN chmod +x /app/bin/setup.sh
 
-ENV HOST=0.0.0.0\
-    PORT=7777\
-    KEY_LENGTH=10\
-    MAX_LENGTH=400000\
-    STATIC_MAX_AGE=86400\
-    RECOMPRESS_STATIC_ASSETS=true
-
-ENV KEYGENERATOR_TYPE=phonetic \
-    KEYGENERATOR_KEYSPACE=
-
-ENV RATELIMITS_NORMAL_TOTAL_REQUESTS=500\
-    RATELIMITS_NORMAL_EVERY_MILLISECONDS=60000 \
-    RATELIMITS_WHITELIST_TOTAL_REQUESTS= \
-    RATELIMITS_WHITELIST_EVERY_MILLISECONDS=  \
-    # comma separated list for the whitelisted \
-    RATELIMITS_WHITELIST=example1.whitelist,example2.whitelist \
-    \
-    RATELIMITS_BLACKLIST_TOTAL_REQUESTS= \
-    RATELIMITS_BLACKLIST_EVERY_MILLISECONDS= \
-    # comma separated list for the blacklisted \
-    RATELIMITS_BLACKLIST=example1.blacklist,example2.blacklist
-ENV DOCUMENTS=about=./about.md
-
-EXPOSE ${PORT}
-STOPSIGNAL SIGINT
-ENTRYPOINT [ "bash", "docker-entrypoint.sh" ]
-
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s \
-    --retries=3 CMD [ "sh", "-c", "echo -n 'curl localhost:7777... '; \
-    (\
-        curl -sf localhost:7777 > /dev/null\
-    ) && echo OK || (\
-        echo Fail && exit 2\
-    )"]
-CMD ["npm", "start"]
+CMD ["yarn", "turbo", "run", "dev", "--filter=./apps/*", "--parallel"]

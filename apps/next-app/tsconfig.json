@@ -1,0 +1,19 @@
+{
+  "extends": "tsconfig/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "incremental": true,
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    ".next",
+    ".turbo",
+    "test-coverage",
+    "reports",
+    ".nyc_output"
+  ]
+}

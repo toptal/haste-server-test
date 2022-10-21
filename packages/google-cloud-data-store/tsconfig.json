@@ -1,0 +1,16 @@
+{
+  "extends": "tsconfig/server.json",
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "incremental": true,
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "include": ["src", "src/global.d.ts"],
+  "exclude": ["node_modules", "dist", ".turbo", "coverage", "test"]
+}

@@ -1,0 +1,40 @@
+name: 'Unit test steps'
+description: 'Step to run unit tests'
+
+inputs:
+  repository_name:
+    description: 'Package name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cancel previous runs
+      uses: styfle/cancel-workflow-action@0.9.0
+      with:
+        access_token: ${{ github.token }}
+
+    - uses: actions/checkout@v2
+
+    - name: Set up steps
+      uses: ./.github/actions/setup-steps
+
+    - name: Unit tests
+      shell: bash
+      run: yarn test:unit:coverage --filter='${{ inputs.repository_name }}'
+
+    - name: Upload Jest HTML report
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: jest-report-unit-tests-report
+        path: reports/jest-report-unit-${{ inputs.repository_name }}.html
+        retention-days: 1
+
+    - name: Upload unit tests coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: report-unit-coverage-${{ inputs.repository_name }}
+        path: test-coverage/unit
+        retention-days: 1
+

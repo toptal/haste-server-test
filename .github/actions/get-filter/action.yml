@@ -1,0 +1,25 @@
+name: Get Filter
+description: Assembles the filter statement to be used with turbo CLI.
+
+outputs:
+  filter:
+    description: Filter statement to be used with turbo CLI.
+    value: ${{ steps.filter-builder.outputs.result }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v6
+
+    - name: Assembles the filter command
+      id: filter-builder
+      uses: actions/github-script@v6
+      with:
+        result-encoding: string
+        script: if(${{ steps.branch-name.outputs.is_default }} === true){
+          return '--filter=...[HEAD^1]'
+          } else {
+          return '--filter=...[origin/${{ steps.branch-name.outputs.default_branch }}...origin/${{ steps.branch-name.outputs.current_branch }}]'
+          }

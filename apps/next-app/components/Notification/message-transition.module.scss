@@ -1,0 +1,32 @@
+@import "base.scss";
+
+%transition {
+  transition:
+    opacity 60ms linear 60ms,
+    transform 300ms $default-transition-timing;
+}
+
+.enter,
+.appear {
+  transform: scale(80%);
+  opacity: 0;
+}
+
+.enter-active {
+  @extend %transition;
+
+  transform: scale(100%);
+  opacity: 1;
+}
+
+.exit {
+  transform: scale(100%);
+  opacity: 1;
+}
+
+.exit-active {
+  @extend %transition;
+
+  transform: scale(80%);
+  opacity: 0;
+}

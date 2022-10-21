@@ -1,0 +1,10 @@
+@import "base.scss";
+
+.selector {
+  padding: gutter(2) 0;
+  border-bottom: 1px solid $gray-main;
+
+  .text {
+    @include font-h3($black);
+  }
+}

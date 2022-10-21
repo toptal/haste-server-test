@@ -1,0 +1,40 @@
+@import "styles/base";
+
+.container {
+  @include for-tablet {
+    @include flex-container(row, space-between, stretch);
+  }
+
+  @include for-desktop {
+    @include flex-container(row, flex-start, stretch);
+  }
+
+  .token-output {
+    width: 100%;
+    margin-bottom: gutter(2);
+    background-color: $input-background-color !important;
+    color: $gray-dark !important;
+
+    @include for-tablet {
+      margin: 0 gutter(3) 0 0;
+    }
+
+    @include for-desktop {
+      width: 348px;
+    }
+  }
+
+  .generate-token-button {
+    margin: 0;
+    width: 100%;
+    color : $primary-button-color;
+
+    @include for-tablet {
+      width: 162px;
+    }
+
+    @include for-desktop {
+      width: 140px;
+    }
+  }
+}

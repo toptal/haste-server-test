@@ -1,0 +1,32 @@
+name: Lint and Typescript checks
+description: 'Step to run lint and typescript checks'
+
+inputs:
+  repository_name:
+    description: 'Package name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cancel previous runs
+      uses: styfle/cancel-workflow-action@0.9.0
+      with:
+        access_token: ${{ github.token }}
+
+    - uses: actions/checkout@v2
+
+    - name: Set up steps
+      uses: ./.github/actions/setup-steps
+
+    - name: Run styles lint
+      shell: bash
+      run: yarn lint:styles:ci --filter='${{ inputs.repository_name }}'
+
+    - name: Run lint
+      shell: bash
+      run: yarn lint:ci --filter='${{ inputs.repository_name }}'
+
+    - name: Type checking
+      shell: bash
+      run: yarn types:check --filter='${{ inputs.repository_name }}'

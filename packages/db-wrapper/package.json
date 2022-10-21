@@ -1,0 +1,35 @@
+{
+  "name": "@hastebin/db-wrapper",
+  "version": "0.0.0",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --ext js,ts",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx  --fix",
+    "lint:ci": "yarn lint --quiet",
+    "types:check": "tsc --noEmit --pretty",
+    "test:unit": "jest --colors --config config/jest.config.js",
+    "test:unit:coverage": "yarn test:unit --ci --silent --maxWorkers 2 --collectCoverage true",
+    "dev": "tsc-watch --onSuccess \"tscpaths -p tsconfig.json -s ./src -o ./dist/src\"",
+    "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./dist/src"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "knex": "^2.1.0",
+    "path": "^0.12.7",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "@hastebin/data-store-helper": "*",
+    "@types/knex": "^0.16.1",
+    "eslint-config": "*",
+    "jest": "*",
+    "tsc-watch": "^5.0.3",
+    "tsconfig": "*",
+    "tscpaths": "^0.0.9",
+    "typescript": "^4.6.2"
+  }
+}
+

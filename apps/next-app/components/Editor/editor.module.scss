@@ -1,0 +1,97 @@
+@import "base.scss";
+
+.container {
+  @include flex-container(column, stretch, stretch);
+
+  flex-grow: 1;
+
+  position: relative;
+}
+
+.editor {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  border: 1px solid $gray-light-2;
+  border-radius: 4px;
+  background: $white;
+  padding: gutter(2);
+  font-size: 13px;
+  line-height: gutter(2);
+
+  &:focus-within {
+    border: solid 1px $border-color;
+  }
+}
+
+.editor-disabled {
+  background: $gray-light;
+}
+
+.editor-lines {
+  $width: 16px;
+
+  color: $editor-number-color;
+  opacity: 0.3;
+
+  font-variant-numeric: tabular-nums;
+
+  min-width: calc($width + gutter());
+
+  @include for-tablet {
+    min-width: calc($width + gutter(2));
+  }
+
+  @include for-desktop {
+    min-width: calc($width + gutter(3));
+  }
+
+  span {
+    display: block;
+    font-family: "PT Mono", monospace;
+  }
+}
+
+.editor-content {
+  border: none;
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  line-height: gutter(2);
+  overflow: hidden;
+  overflow-x: auto;
+  resize: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  background: $white;
+
+  color: $text-color;
+  /* required on iOS */
+  -webkit-text-fill-color: $text-color;
+  opacity: 1;
+
+  @include increase-specificity {
+    font-family: "PT Mono", monospace;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.editor-content:disabled {
+  background: $gray-light;
+  white-space: pre-line;
+
+  color: $dark-text-color;
+  -webkit-text-fill-color: $dark-text-color;
+}
+
+.copy-button {
+  @include increase-specificity {
+    position: absolute;
+    bottom: gutter(2);
+    right: gutter(2);
+  }
+}

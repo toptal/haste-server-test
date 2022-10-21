@@ -1,0 +1,17 @@
+@import "base.scss";
+
+.modal {
+  div[role="dialog"] {
+    background-color: $white;
+    padding: 0px;
+    margin: 0px;
+
+    h2 {
+      color: $black;
+    }
+    
+    p {
+      color: $gray-dark;
+    }
+  }
+}

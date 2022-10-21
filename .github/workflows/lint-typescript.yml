@@ -1,0 +1,37 @@
+name: Lint and Typescript
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  lint_typescript:
+    name: Lint and Typescript checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up steps
+        uses: ./.github/actions/setup-steps
+
+      - name: Get filter statement
+        id: get-filter
+        uses: ./.github/actions/get-filter
+
+      - name: Run styles lint
+        run: yarn lint:styles:ci ${{ steps.get-filter.outputs.filter }}
+
+      - name: Run lint
+        run: yarn lint:ci ${{ steps.get-filter.outputs.filter }}
+
+      - name: Type checking
+        run: yarn types:check ${{ steps.get-filter.outputs.filter }}

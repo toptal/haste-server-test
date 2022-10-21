@@ -1,0 +1,45 @@
+@import "base.scss";
+
+.layout {
+  div[role="menu"] {
+    margin-top: gutter(2);
+  }
+
+  a[role="menuitem"] {
+    margin-bottom: gutter(0.5) !important;
+  }
+
+  main {
+    width: 100%;
+    min-height: calc(100vh - #{$header-height});
+    padding-right: 0 !important;
+  }
+
+  @include for-mobile-only {
+    font-size: 14px;
+  }
+
+}
+
+.container {
+  margin-bottom: gutter(3);
+  padding-bottom: gutter(3);
+  border-bottom: 1px solid $gray-light;
+
+  @include for-desktop {
+    margin-bottom: gutter(4);
+    padding-bottom: gutter(4);
+  }
+}
+
+.status-code {
+  margin-bottom: gutter(1);
+}
+
+.code {
+  margin-bottom: 2px;
+}
+
+.title {
+  color: $white;
+}

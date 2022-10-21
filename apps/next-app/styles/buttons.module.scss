@@ -1,0 +1,78 @@
+@import "base.scss";
+
+@mixin button {
+  min-width: 140px;
+
+  span {
+    font-size: 13px;
+  }
+
+  &:disabled {
+    border: solid 1px $border-color;
+  }
+}
+
+.primary-button {
+  @include increase-specificity {
+    @include button();
+
+    color: $primary-button-color;
+
+    &:disabled {
+      background-color: $disabled-button-background-color;
+      color: $disabled-button-color;
+    }
+  }
+}
+
+.secondary-button {
+  @include increase-specificity {
+    @include button();
+
+    background-color: $secondary-button-background-color;
+
+    &:hover {
+      border-color: $secondary-button-hover-color;
+    }
+
+    &:disabled {
+      border-color: $disabled-button-border-color;
+    }
+  }
+}
+
+.buttons-container {
+  @include flex-container(column, flex-start, stretch);
+
+  padding: gutter(2);
+
+  @include for-mobile-only {
+    @include increase-specificity {
+
+      >.primary-button {
+        margin-top: gutter();
+      }
+
+      .secondary-button + .secondary-button {
+        margin-top: gutter();
+        margin-left: 0;
+      }
+    }
+  }
+
+  @include for-tablet {
+    @include flex-container(row, flex-start, center);
+
+    margin: 0 0 gutter(3) 0;
+    padding: 0;
+  }
+}
+
+.buttons-divider {
+  display: none;
+
+  @include for-tablet {
+    display: block;
+    flex: 1;
+  }
+}

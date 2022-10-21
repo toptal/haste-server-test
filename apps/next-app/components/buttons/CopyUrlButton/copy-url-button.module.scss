@@ -1,0 +1,30 @@
+@import "base.scss";
+
+.container {
+  position: relative;
+
+  .notification-container {
+    z-index: 1;
+    position: absolute;
+    top: -54px;
+
+    @include for-tablet {
+      right: gutter();
+      top: -26px;
+    }
+
+    .notification {
+      width: calc(100vw - 32px);
+
+      @include for-tablet {
+        width: 238px;
+      }
+    }
+
+    .error-notification {
+      @include for-tablet {
+        width: 288px;
+      }
+    }
+  }
+}

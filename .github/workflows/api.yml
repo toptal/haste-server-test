@@ -1,0 +1,64 @@
+name: API
+
+env:
+  DATABASE_URL: postgres://dbuser:dbpassword@localhost/hastebin_test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  api:
+    name: API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: bitnami/postgresql:12
+        env:
+          POSTGRESQL_USERNAME: dbuser
+          POSTGRESQL_PASSWORD: dbpassword
+          POSTGRESQL_DATABASE: hastebin_test
+        options: >-
+          --health-cmd "pg_isready -U dbuser"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up steps
+        uses: ./.github/actions/setup-steps
+
+      - name: Get filter statement
+        id: get-filter
+        uses: ./.github/actions/get-filter
+
+      - name: Run migrations and seed
+        run: |
+          yarn db:migrate:deploy
+          yarn db:seed
+
+      - name: Build steps
+        uses: ./.github/actions/build-steps
+
+      - name: API tests
+        run: yarn test:api:ci 'turbo run test:api:ci --force ${{ steps.get-filter.outputs.filter }}'
+
+      - name: Upload Jest HTML report
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-report-unit-tests-report
+          path: reports/jest-report-api.html
+          retention-days: 1

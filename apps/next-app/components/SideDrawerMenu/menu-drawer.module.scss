@@ -1,0 +1,36 @@
+@import "base.scss";
+
+.menu-container {
+  margin-top: gutter(2);
+}
+
+.languages-menu {
+  margin: 0;
+
+  @include increase-specificity {
+    .languages-menu-item {
+      margin: 0;
+      padding: gutter(1) 0;
+
+      border: none;
+    }
+  }
+}
+
+.languages-menu-title {
+  @include increase-specificity {
+    @include font-h3($black);
+    padding-bottom: gutter(1);
+  }
+}
+
+.about-menu-item {
+  @include increase-specificity {
+    padding: gutter(2) 0;
+    margin: 0;
+
+    .item {
+      @include font-h3();
+    }
+  }
+}

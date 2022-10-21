@@ -1,0 +1,25 @@
+@import "base.scss";
+
+.notification-container {
+  z-index: 1;
+  width: 100%;
+
+  .notification {
+    box-sizing: border-box;
+    color: $gray-dark;
+    line-height: 22px;
+    height: 54px;
+
+    border: 1px $gray-lighter-2;
+    border-radius: 8px;
+    box-shadow: $shadow-notifications;
+
+    .notification-message {
+      color: $notification-text-color;
+    }
+
+    button svg {
+      color: $notification-close-button;
+    }
+  }
+}

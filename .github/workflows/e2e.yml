@@ -1,0 +1,89 @@
+name: End-to-end
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  e2e:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      NEXT_PUBLIC_GA_ID: xxx
+      DATABASE_URL: postgres://dbuser:dbpassword@localhost/hastebin_test
+      NEXT_PUBLIC_BYPASS_SESSION: enabled
+      NEXTAUTH_URL: http://localhost:3000/api/auth
+      NEXTAUTH_SECRET: 6e86924dfd0d050568c50dddb38427c7
+
+    services:
+      postgres:
+        image: bitnami/postgresql:12
+        env:
+          POSTGRESQL_USERNAME: dbuser
+          POSTGRESQL_PASSWORD: dbpassword
+          POSTGRESQL_DATABASE: hastebin_test
+        options: >-
+          --health-cmd "pg_isready -U dbuser"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up steps
+        uses: ./.github/actions/setup-steps
+
+      - name: Run migrations and seed
+        run: |
+          yarn db:migrate:deploy
+          yarn db:seed
+
+      - name: Get filter statement
+        id: get-filter
+        uses: ./.github/actions/get-filter
+
+      - name: End-to-end tests
+        run: yarn test:e2e:ci 'turbo run test:e2e:coverage --force ${{ steps.get-filter.outputs.filter }}'
+        env:
+          FORCE_COLOR: 2
+
+      - name: Generate coverage report
+        run: yarn nyc:report ${{ steps.get-filter.outputs.filter }}
+
+      - name: Run empty coverage check
+        run: ruby -e "require 'json'; raise 'Empty report' if File.file?('./test-coverage/e2e/coverage-final.json') && JSON.parse(File.read('./test-coverage/e2e/coverage-final.json')) === {}"
+
+      - name: Upload Playwright HTML report
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: playwright-e2e-tests-report
+          path: reports/index.html
+          retention-days: 1
+
+      - name: Upload Playwright failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e-tests-failure-screenshots
+          path: screenshots
+          retention-days: 1
+
+      - name: Upload e2e tests coverage HTML report
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e-coverage-report
+          path: test-coverage/e2e
+          retention-days: 1

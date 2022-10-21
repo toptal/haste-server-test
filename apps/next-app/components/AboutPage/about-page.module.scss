@@ -1,0 +1,36 @@
+@import "base.scss";
+
+.hr {
+  width: 100%;
+  border: none;
+  border-top: 1px solid $gray-lighter-2;
+  margin: gutter(1) gutter();
+
+  @include for-tablet {
+    margin: gutter(2) gutter(1);
+  }
+}
+
+.text-block {
+  p + p {
+    margin-top: gutter(3);
+  }
+}
+
+.mobile-hidden {
+  display: none;
+
+  @include for-tablet {
+    display: block;
+  }
+}
+
+.link {
+  @include increase-specificity {
+    color: $link-color;
+
+    &:visited {
+      color: $link-color;
+    }
+  }
+}

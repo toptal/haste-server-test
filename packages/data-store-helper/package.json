@@ -1,0 +1,21 @@
+{
+  "name": "@hastebin/data-store-helper",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --ext js,ts",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx  --fix",
+    "lint:ci": "yarn lint --quiet",
+    "types:check": "tsc --noEmit --pretty",
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "eslint-config": "*",
+    "jest": "*",
+    "tsconfig": "*"
+  }
+}

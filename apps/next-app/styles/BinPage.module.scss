@@ -1,0 +1,19 @@
+@import "base.scss";
+
+$mobile-buttons-block-height: 104px; // 2 buttons + paddings
+$shared-page-mobile-buttons-block-height: 144px; // 3 buttons + paddings
+$editor-external-padding: 32px;
+
+.editor-container {
+  @include flex-container();
+
+  @include increase-specificity {
+    margin: 0;
+  }
+
+  min-height: calc(100vh - #{$mobile-buttons-block-height} - #{$editor-external-padding} - #{$header-height});
+}
+
+.shared-page-editor-container {
+  min-height: calc(100vh - #{$shared-page-mobile-buttons-block-height} - #{$editor-external-padding} - #{$header-height});
+}

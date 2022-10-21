@@ -1,0 +1,57 @@
+// @link https://www.figma.com/file/5SCTOPrCDcHuk5We091GBn/Product-Library?node-id=2%3A0
+
+// BLUE
+$blue-lighter: var(--blue-lighter, #edf1fd);
+$blue-light: var(--blue-light, #25a9ef);
+$blue-main: var(--blue-main, #204ecf);
+$blue-dark: var(--blue-dark, #183a9e);
+$blue-darker: var(--blue-darker, #0f256e);
+
+// GREEN
+$green-lighter: var(--green-lighter, #eafbf5);
+$green-main: var(--green-main, #00cc83);
+$green-dark: var(--green-dark, #03b080);
+$green-darker: var(--green-darker, #05947c);
+
+// GRAY
+$gray-lightest: var(--gray-lightest, #fcfcfc);
+$gray-lighter: var(--gray-lighter, #f3f4f6);
+$gray-lighter-2: var(--gray-lighter-2, #ebeced);
+$gray-light: var(--gray-light, #e5e7ea);
+$gray-light-2: var(--gray-light-2, #d8d9dc);
+$gray-main: var(--gray-main, #c4c6ca);
+$gray-main-2: var(--gray-main-2, #84888e);
+$gray-dark: var(--gray-dark, #455065);
+$gray-darker: var(--gray-darker, #262d3d);
+
+// RED
+$red-lighter: var(--red-lighter, #fbedf1);
+$red-main: var(--red-main, #d42551);
+
+// YELLOW
+$yellow-lighter: var(--yellow-lighter, #fff5e3);
+$yellow-main: var(--yellow-main, #e59c01);
+
+// SALT & PEPPER
+$white: var(--white, #fff);
+$black: var(--black, #000);
+
+//COMPONENTS
+
+$text-color: var(--text-color, #455065);
+$dark-text-color: var(--dark-text-color, #455065);
+$editor-number-color: var(--editor-number-color, #000000);
+$notification-text-color: var(--notification-text-color, #000000);
+$secondary-button-background-color: var(--secondary-button-background-color, #fff);
+$primary-button-color: var(--primary-button-color, #fff);
+$highlighted-word-color: var(--highlighted-word-color, #d8d9dc);
+$tooltip-background-color: var(--tooltip-background-color, #262d3d);
+$tooltip-color: var(--tooltip-color, #fff);
+$input-background-color: var(--input-background-color, #fff);
+$border-color: var(--border-color, #d8d9dc);
+$disabled-button-background-color: var(--disabled-button-background-color, #d8d9dc);
+$disabled-button-color: var(--disabled-button-color, #fff);
+$secondary-button-hover-color: var(--secondary-button-hover-color, #262d3d);
+$disabled-button-border-color: var(--disabled-button-border-color, #c4c6ca);
+$link-color: var(--link-color, #204ecf);
+$notification-close-button: var(--notification-close-button, #000000);

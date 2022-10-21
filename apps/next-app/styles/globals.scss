@@ -1,0 +1,33 @@
+@import "base";
+
+@import "reset";
+@import "fonts";
+
+html,
+body {
+  @extend %font-sans-400;
+  scroll-behavior: smooth;
+
+  /*
+    take all available viewport height to make footer sticking
+    to the bottom even on pages with small amount of content
+  */
+  height: 100%;
+
+  margin: unset;
+}
+
+body div[role="tooltip"] {
+  @include for-mobile-only {
+    display: none;
+  }
+
+  div {
+    background-color: $tooltip-background-color;
+    color: $tooltip-color;
+
+    span {
+      color: $tooltip-background-color;
+    }
+  }
+}

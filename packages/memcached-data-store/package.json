@@ -1,0 +1,28 @@
+{
+  "name": "@hastebin/memcached-data-store",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/types/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --ext js,ts",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx  --fix",
+    "lint:ci": "yarn lint --quiet",
+    "types:check": "tsc --noEmit --pretty",
+    "test:unit": "jest --colors --config config/jest.config.js",
+    "test:unit:coverage": "yarn test:unit --ci --silent --maxWorkers 2 --collectCoverage true",
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@hastebin/data-store-helper": "*",
+    "memcached": "^2.2.2",
+    "winston": "^3.8.0"
+  },
+  "devDependencies": {
+    "@types/memcached": "^2.2.7",
+    "eslint-config": "*",
+    "jest": "*",
+    "tsconfig": "*"
+  }
+}

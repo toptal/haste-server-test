@@ -1,0 +1,16 @@
+@import "base.scss";
+
+.download-raw-button {
+  @include increase-specificity {
+    display: none;
+    margin-left: 82px;
+    margin-right: gutter(2);
+  
+    color: $gray-darker;
+    border-color: $gray-darker;
+  
+    @include for-tablet {
+      display: flex;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "extends": "tsconfig/server.json",
+  "ts-node": {
+    "files": true,
+    "transpileOnly": true
+  },
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "~/server/*": ["src/server/*"],
+      "~/config/*": ["config/*"],
+      "~/constants/*": ["src/constants/*"],
+      "~/lib/*": ["src/lib/*"],
+      "~/routes/*": ["src/routes/*"],
+      "~/middleware/*": ["src/middleware/*"],
+      "~/test/*": ["test/*"],
+      "~/types/*": ["src/types/*"]
+    }
+  },
+  "include": ["src", "src/global.d.ts", "test"],
+  "exclude": ["node_modules", "dist", ".turbo", "coverage"]
+}

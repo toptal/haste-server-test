@@ -1,0 +1,21 @@
+version: '3.0'
+services:
+  postgresql:
+    image: bitnami/postgresql:12
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+      - ./packages/postgres-data-store/createdb.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dbuser']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRESQL_USERNAME: dbuser
+      POSTGRESQL_PASSWORD: dbpassword
+      POSTGRESQL_DATABASE: hastebin
+
+volumes:
+  postgresql_data: {}

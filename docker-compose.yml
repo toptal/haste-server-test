@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+
+  app:
+    build:
+      context: .
+      args:
+        user: ${RUN_AS_USER:-node}
+        npm_token: ${NPM_TOKEN}
+    environment:
+      DATABASE_URL: postgres://dbuser:dbpassword@postgresql/hastebin?schema=public
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-randomsupersafesecret}
+      NEXTAUTH_URL: http://localhost:3000/
+      NEXT_PUBLIC_BASE_API_URL: http://localhost:7777
+      NEXT_PUBLIC_BYPASS_SESSION: ${NEXT_PUBLIC_BYPASS_SESSION:-enabled}
+      NEXT_PUBLIC_FF_USER_AUTH: enabled
+      NEXT_PUBLIC_DOCUMENTATION_URL: http://localhost:3000/documentation
+      STORAGE_TYPE: file-data-store
+    ports:
+      - 3000:3000
+      - 7777:7777
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+      - node_modules_next:/app/apps/next-app/node_modules
+      - node_modules_server:/app/apps/server/node_modules
+
+  postgresql:
+    image: bitnami/postgresql:12
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+      - ./packages/postgres-data-store/createdb.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dbuser']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRESQL_USERNAME: dbuser
+      POSTGRESQL_PASSWORD: dbpassword
+      POSTGRESQL_DATABASE: hastebin
+
+volumes:
+  postgresql_data: {}
+  node_modules:
+  node_modules_next:
+  node_modules_server:

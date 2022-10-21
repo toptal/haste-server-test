@@ -1,0 +1,65 @@
+@import "base.scss";
+
+$half-copy-code-button-height: 28px;
+
+.container {
+  @include flex-container(row, space-evenly, flex-start);
+  position: absolute;
+  right: 0;
+  z-index: 1;
+
+  @include for-tablet {
+    justify-content: flex-end;
+    margin: gutter(2) 0;
+  }
+
+  .notification {
+    width: 216px;
+    margin-right: gutter(2);
+  }
+
+  .error-notification {
+    width: 276px;
+    margin-right: gutter(1);
+
+    @include for-tablet {
+      margin-right: gutter(2);
+    }
+  }
+
+  .copy-button {
+    @include size(56px);
+
+    transition: transform 150ms $default-transition-timing,
+      opacity 100ms $default-transition-timing;
+    transition-delay: 100ms;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:active,
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($blue-main, 0.48);
+    }
+
+    @include for-desktop {
+      margin-right: gutter(4);
+    }
+  }
+
+  .rotate-icon {
+    transform: rotate(360deg);
+
+    transition-delay: 0ms;
+  }
+
+  .success-icon {
+    background-color: $green-dark !important;
+  }
+
+  .error-icon {
+    background-color: $red-main !important;
+  }
+}

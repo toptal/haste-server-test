@@ -1,0 +1,6 @@
+.git*
+.bundle
+Dockerfile*
+docker-compose.yml*
+Makefile*
+README.*

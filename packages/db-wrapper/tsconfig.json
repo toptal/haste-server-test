@@ -1,0 +1,17 @@
+{
+  "extends": "../../packages/tsconfig/server.json",
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "include": ["src", "src/global.d.ts"],
+  "exclude": ["node_modules", ".turbo", "coverage"]
+}

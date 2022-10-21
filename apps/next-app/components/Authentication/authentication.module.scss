@@ -1,0 +1,21 @@
+@import "base.scss";
+
+.signin-button {
+  @include for-tablet {
+    width: 162px;
+  }
+
+  @include increase-specificity {
+    color : $primary-button-color;
+  }
+}
+
+.signout-link {
+  @include increase-specificity {
+    color: $link-color;
+
+    &:visited {
+      color: $link-color;
+    }
+  }
+}
